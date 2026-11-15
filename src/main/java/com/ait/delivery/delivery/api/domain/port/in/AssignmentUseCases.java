@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface AssignmentUseCases {
     Assignment assign(UUID orderId, UUID driverId, FileUpload pdf, FileUpload image);
-    List<Assignment> list();
+    List<Assignment> list(UUID orderId, UUID driverId);
 }

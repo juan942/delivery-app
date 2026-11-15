@@ -7,7 +7,5 @@ import java.util.UUID;
 
 public interface AssignmentRepository {
     Assignment save(Assignment assignment);
-    boolean existsActiveByOrderId(UUID orderId);
-    List<Assignment> finByOrderIdAndDriverId();
-    List<Assignment> findAll();
+    List<Assignment> findAll(UUID orderId, UUID driverId);
 }

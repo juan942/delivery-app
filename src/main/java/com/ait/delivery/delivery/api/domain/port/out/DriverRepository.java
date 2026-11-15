@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface DriverRepository {
-    Driver save(Driver save);
+    Driver save(Driver driver);
     Optional<Driver> findById(UUID id);
     List<Driver> findAllActive();
     List<Driver> findAll();

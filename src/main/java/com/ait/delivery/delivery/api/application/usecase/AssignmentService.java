@@ -24,7 +24,6 @@ import java.util.UUID;
 @Service
 @Transactional
 public class AssignmentService implements AssignmentUseCases {
-
     private static final Set<String> PDF_EXTENSIONS = Set.of("pdf");
     private static final Set<String> PDF_TYPES = Set.of("application/pdf");
     private static final Set<String> IMAGE_EXTENSIONS = Set.of("png", "jpg", "jpeg");
@@ -69,8 +68,8 @@ public class AssignmentService implements AssignmentUseCases {
     }
 
     @Override
-    public List<Assignment> list() {
-        return assignmentRepository.findAll();
+    public List<Assignment> list(UUID orderId, UUID driverId) {
+        return assignmentRepository.findAll(orderId, driverId);
     }
 
     private void validateTypeFile(FileUpload file, Set<String> extensions, Set<String> types, String field) {
