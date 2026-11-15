@@ -14,7 +14,7 @@ public class Assignment {
     private final String pdfPath;
     private final String imagePath;
 
-    private Assignment(UUID id, UUID orderId, UUID driverId, ZonedDateTime createdAt,
+    public Assignment(UUID id, UUID orderId, UUID driverId, ZonedDateTime createdAt,
                        ZonedDateTime endedAt, String pdfPath, String imagePath) {
         this.id = id;
         this.orderId = orderId;

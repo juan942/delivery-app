@@ -10,7 +10,7 @@ public class Driver {
     private final String licenseNumber;
     private boolean active;
 
-    private Driver(UUID id, String name, String licenseNumber, boolean active) {
+    public Driver(UUID id, String name, String licenseNumber, boolean active) {
         this.id = id;
         this.name = name;
         this.licenseNumber = licenseNumber;
