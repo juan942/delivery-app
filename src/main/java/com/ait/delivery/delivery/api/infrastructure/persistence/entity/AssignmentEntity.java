@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "assigments")
+@Table(name = "assignments")
 @Getter
 @Setter
 @NoArgsConstructor

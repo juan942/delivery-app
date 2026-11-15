@@ -22,7 +22,7 @@ CREATE TABLE assignments (
     ended_at TIMESTAMP,
     pdf_path VARCHAR(500) NOT NULL,
     image_path VARCHAR(500) NOT NULL
-)
+);
 
 CREATE UNIQUE INDEX one_assignment_active_order
 ON assignments(order_id) WHERE ended_at IS NULL;
@@ -31,4 +31,4 @@ CREATE TABLE users(
     id UUID PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(150) NOT NULL
-)
+);
