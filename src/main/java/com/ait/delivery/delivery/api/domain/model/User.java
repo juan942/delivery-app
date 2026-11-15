@@ -1,0 +1,27 @@
+package com.ait.delivery.delivery.api.domain.model;
+
+import java.util.UUID;
+
+public class User {
+    private final UUID id;
+    private final String username;
+    private final String password;
+
+    private User(UUID id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPasswordHash() {
+        return password;
+    }
+}
