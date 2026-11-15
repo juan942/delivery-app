@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface DriverUseCases {
     Driver create(String name, String licenseNumber);
-    List<Driver> getListActive();
+    List<Driver> listActive();
 }
