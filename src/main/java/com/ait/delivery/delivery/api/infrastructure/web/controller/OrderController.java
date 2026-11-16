@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -77,7 +78,7 @@ public class OrderController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdTo) {
 
         LocalDateTime from = createdFrom != null ? createdFrom.atStartOfDay() : null;
-        LocalDateTime to = createdTo != null ? createdTo.atStartOfDay() : null;
+        LocalDateTime to = createdTo != null ? createdTo.atTime(LocalTime.MAX) : null;
 
         OrderFilter filter = new OrderFilter(status, origin, destination, from, to);
         List<Order> orderList = useCases.list(filter);

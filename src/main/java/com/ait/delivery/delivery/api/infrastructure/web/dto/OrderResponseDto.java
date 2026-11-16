@@ -3,7 +3,7 @@ package com.ait.delivery.delivery.api.infrastructure.web.dto;
 import com.ait.delivery.delivery.api.domain.enums.OrderStatus;
 import com.ait.delivery.delivery.api.domain.model.Order;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record OrderResponseDto(
@@ -11,8 +11,8 @@ public record OrderResponseDto(
         OrderStatus status,
         String origin,
         String destination,
-        ZonedDateTime createdAt,
-        ZonedDateTime updatedAt
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
 ) {
     public static OrderResponseDto convert(Order domain) {
         return new OrderResponseDto(

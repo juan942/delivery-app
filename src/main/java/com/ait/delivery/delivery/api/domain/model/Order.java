@@ -3,6 +3,7 @@ package com.ait.delivery.delivery.api.domain.model;
 import com.ait.delivery.delivery.api.domain.enums.OrderStatus;
 import com.ait.delivery.delivery.api.domain.exception.InvalidArgumentException;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -11,10 +12,10 @@ public class Order {
     private OrderStatus status;
     private final String origin;
     private final String destination;
-    private final ZonedDateTime createdAt;
-    private ZonedDateTime updatedAt;
+    private final LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
-    public Order(UUID id, OrderStatus status, String origin, String destination, ZonedDateTime createdAt, ZonedDateTime updatedAt) {
+    public Order(UUID id, OrderStatus status, String origin, String destination, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.status = status;
         this.origin = origin;
@@ -26,13 +27,13 @@ public class Order {
     public static Order create(String origin, String destination) {
         validateText(origin, "origin");
         validateText(destination, "destination");
-        ZonedDateTime now = ZonedDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
         return new Order(UUID.randomUUID(), OrderStatus.CREATED, origin, destination, now, now);
     }
 
     public void transitionTo(OrderStatus next) {
         this.status = this.status.transitionTo(next);
-        this.updatedAt = ZonedDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     private static void validateText(String value, String field) {
@@ -57,11 +58,11 @@ public class Order {
         return destination;
     }
 
-    public ZonedDateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public ZonedDateTime getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 }

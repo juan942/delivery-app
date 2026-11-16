@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS orders (
     status VARCHAR(20) NOT NULL,
     origin VARCHAR(250) NOT NULL,
     destination VARCHAR(250) NOT NULL,
-    created_at TIMESTAMPTZ NOT NULL,
-    updated_at TIMESTAMPTZ NOT NULL
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS assignments (
