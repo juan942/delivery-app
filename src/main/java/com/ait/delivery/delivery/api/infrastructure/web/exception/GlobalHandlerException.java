@@ -3,6 +3,8 @@ package com.ait.delivery.delivery.api.infrastructure.web.exception;
 import com.ait.delivery.delivery.api.domain.exception.*;
 import com.ait.delivery.delivery.api.infrastructure.web.dto.ApiError;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import java.time.Instant;
 
 @RestControllerAdvice
 public class GlobalHandlerException {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalHandlerException.class);
 
     @ExceptionHandler({OrderNotFoundException.class, DriverNotFoundException.class})
     public ResponseEntity<ApiError> handleNotFound(DomainException ex, HttpServletRequest request) {
@@ -53,6 +57,7 @@ public class GlobalHandlerException {
     }
 
     private ResponseEntity<ApiError> build (HttpStatusCode status, String message, HttpServletRequest request, String details) {
+        log.warn("Request rejected: method={}, path={}, status={}, message={}", request.getMethod(), request.getRequestURI(), status.value(), message);
         HttpStatus resolved = HttpStatus.resolve(status.value());
         String error = resolved != null ? resolved.getReasonPhrase() : "Error";
         ApiError body = new ApiError(Instant.now(), status.value(), error, message, request.getRequestURI(), details);

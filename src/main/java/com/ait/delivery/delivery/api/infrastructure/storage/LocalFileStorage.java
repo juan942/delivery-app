@@ -2,6 +2,8 @@ package com.ait.delivery.delivery.api.infrastructure.storage;
 
 import com.ait.delivery.delivery.api.domain.model.FileUpload;
 import com.ait.delivery.delivery.api.domain.port.out.FileStorageRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,7 @@ import java.util.UUID;
 public class LocalFileStorage implements FileStorageRepository {
 
     private final Path uploadDir;
+    private static final Logger log = LoggerFactory.getLogger(LocalFileStorage.class);
 
     public LocalFileStorage(@Value("${app.upload-dir:uploads}") String uploadDir) {
         this.uploadDir = Path.of(uploadDir).toAbsolutePath().normalize();
@@ -30,6 +33,7 @@ public class LocalFileStorage implements FileStorageRepository {
             Files.copy(file.content(), target);
             return target.toString();
         } catch (IOException e) {
+            log.error("Could not storage file: originalName={}", file.filename(), e);
             throw new UncheckedIOException("Could not upload file", e);
         }
     }

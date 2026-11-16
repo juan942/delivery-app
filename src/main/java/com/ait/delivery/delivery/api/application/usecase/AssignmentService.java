@@ -14,6 +14,8 @@ import com.ait.delivery.delivery.api.domain.port.out.AssignmentRepository;
 import com.ait.delivery.delivery.api.domain.port.out.DriverRepository;
 import com.ait.delivery.delivery.api.domain.port.out.FileStorageRepository;
 import com.ait.delivery.delivery.api.domain.port.out.OrderRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +32,7 @@ public class AssignmentService implements AssignmentUseCases {
     private static final Set<String> IMAGE_EXTENSIONS = Set.of("png", "jpg", "jpeg");
     private static final Set<String> IMAGE_TYPES = Set.of("image/png", "image/jpeg");
 
+    private static final Logger log = LoggerFactory.getLogger(AssignmentService.class);
     private final OrderRepository orderRepository;
     private final DriverRepository driverRepository;
     private final AssignmentRepository assignmentRepository;
@@ -74,10 +77,13 @@ public class AssignmentService implements AssignmentUseCases {
             Assignment previous = currentAssigment.get();
             previous.close();
             assignmentRepository.save(previous);
+            log.info("Assigment closed: id={}, orderId={}, previousDriverId={}", previous.getId(), orderId, previous.getDriverId());
         }
 
         Assignment newAssignment = Assignment.create(orderId, driverId, pdfPath, imagePath);
-        return assignmentRepository.save(newAssignment);
+        Assignment saved = assignmentRepository.save(newAssignment);
+        log.info("Driver assigned: assignId={}, orderId={}, driverId={}", saved.getId(), orderId, driverId);
+        return saved;
     }
 
     @Override
