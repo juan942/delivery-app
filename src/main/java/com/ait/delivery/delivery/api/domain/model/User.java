@@ -21,7 +21,7 @@ public class User {
         return username;
     }
 
-    public String getPasswordHash() {
+    public String getPassword() {
         return password;
     }
 }

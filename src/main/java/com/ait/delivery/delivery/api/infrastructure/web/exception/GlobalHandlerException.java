@@ -3,6 +3,7 @@ package com.ait.delivery.delivery.api.infrastructure.web.exception;
 import com.ait.delivery.delivery.api.domain.exception.*;
 import com.ait.delivery.delivery.api.infrastructure.web.dto.ApiError;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +37,13 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(DomainException.class)
-    public ResponseEntity<ApiError> handleDomain(InvalidArgumentException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiError> handleDomain(DomainException ex, HttpServletRequest request) {
         return build(HttpStatus.UNPROCESSABLE_CONTENT, ex.getMessage(), request, null);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiError> handleAuthentication(AuthenticationException ex, HttpServletRequest request) {
+        return build(HttpStatus.UNAUTHORIZED, "Invalid username or password", request, null);
     }
 
     private ResponseEntity<ApiError> build (HttpStatusCode status, String message, HttpServletRequest request, String details) {
