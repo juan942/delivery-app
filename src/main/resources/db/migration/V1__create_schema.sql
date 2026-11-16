@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS assignments (
     id UUID PRIMARY KEY,
     order_id UUID NOT NULL REFERENCES orders(id),
     driver_id UUID NOT NULL REFERENCES drivers(id),
-    created_at TIMESTAMPTZ,
-    ended_at TIMESTAMPTZ,
+    created_at TIMESTAMP,
+    ended_at TIMESTAMP,
     pdf_path VARCHAR(500) NOT NULL,
     image_path VARCHAR(500) NOT NULL
 );

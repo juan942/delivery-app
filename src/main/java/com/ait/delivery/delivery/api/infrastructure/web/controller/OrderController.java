@@ -9,6 +9,7 @@ import com.ait.delivery.delivery.api.infrastructure.web.dto.ChangeOrderStatusReq
 import com.ait.delivery.delivery.api.infrastructure.web.dto.OrderRequestDto;
 import com.ait.delivery.delivery.api.infrastructure.web.dto.OrderResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,7 +19,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,9 +71,15 @@ public class OrderController {
             @RequestParam(required = false) OrderStatus status,
             @RequestParam(required = false) String origin,
             @RequestParam(required = false) String destination,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime createdFrom,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime createdTo) {
-        OrderFilter filter = new OrderFilter(status, origin, destination, createdFrom, createdTo);
+            @Parameter(example = "2026-11-20")
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdFrom,
+            @Parameter(example = "2026-11-22")
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdTo) {
+
+        LocalDateTime from = createdFrom != null ? createdFrom.atStartOfDay() : null;
+        LocalDateTime to = createdTo != null ? createdTo.atStartOfDay() : null;
+
+        OrderFilter filter = new OrderFilter(status, origin, destination, from, to);
         List<Order> orderList = useCases.list(filter);
         return orderList.stream().map(OrderResponseDto::convert).toList();
     }
