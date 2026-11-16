@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -25,7 +26,7 @@ public class AssignmentRepositoryAdapter implements AssignmentRepository {
     @Override
     public Assignment save(Assignment assignment) {
         AssignmentEntity entity = AssignmentMapper.domainToEntity(assignment);
-        return AssignmentMapper.entityToDomain(jpa.save(entity));
+        return AssignmentMapper.entityToDomain(jpa.saveAndFlush(entity));
     }
 
     @Override
@@ -43,5 +44,9 @@ public class AssignmentRepositoryAdapter implements AssignmentRepository {
         return jpa.findAll(spec).stream().map(AssignmentMapper::entityToDomain).toList();
     }
 
+    @Override
+    public Optional<Assignment> findActiveByOrderId(UUID orderId) {
+        return jpa.findByOrderIdAndEndedAtIsNull(orderId).map(AssignmentMapper::entityToDomain);
+    }
 
 }

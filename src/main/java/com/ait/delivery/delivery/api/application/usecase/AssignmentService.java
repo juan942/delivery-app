@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -49,6 +50,12 @@ public class AssignmentService implements AssignmentUseCases {
         Driver driver = driverRepository.findById(driverId)
                 .orElseThrow(() -> new DriverNotFoundException(driverId));
 
+        Optional<Assignment> currentAssigment = assignmentRepository.findActiveByOrderId(orderId);
+
+        if (currentAssigment.isPresent() && currentAssigment.get().getDriverId().equals(driverId)) {
+            throw new BusinessRuleException("Order is already assigned to driver");
+        }
+
         if (order.getStatus() != OrderStatus.CREATED) {
             throw new BusinessRuleException("Order must be in CREATED status to be assigned");
         }
@@ -62,6 +69,12 @@ public class AssignmentService implements AssignmentUseCases {
 
         String pdfPath = fileStorageRepository.store(pdf);
         String imagePath = fileStorageRepository.store(image);
+
+        if (currentAssigment.isPresent()) {
+            Assignment previous = currentAssigment.get();
+            previous.close();
+            assignmentRepository.save(previous);
+        }
 
         Assignment newAssignment = Assignment.create(orderId, driverId, pdfPath, imagePath);
         return assignmentRepository.save(newAssignment);

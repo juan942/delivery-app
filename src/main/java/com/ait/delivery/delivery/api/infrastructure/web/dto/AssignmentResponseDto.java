@@ -10,7 +10,7 @@ public record AssignmentResponseDto(
         UUID orderId,
         UUID driverId,
         ZonedDateTime createdAt,
-        ZonedDateTime updatedAt,
+        ZonedDateTime endedAt,
         String pdfPath,
         String imagePath,
         boolean active

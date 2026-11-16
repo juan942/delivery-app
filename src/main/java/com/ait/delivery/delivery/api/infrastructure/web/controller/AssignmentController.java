@@ -34,7 +34,7 @@ public class AssignmentController {
     }
 
     @GetMapping
-    public List<AssignmentResponseDto> list (@RequestParam(required = false) UUID orderId,
+    public List<AssignmentResponseDto> list(@RequestParam(required = false) UUID orderId,
                                              @RequestParam(required = false) UUID driverId) {
         List<Assignment> response = useCases.list(orderId, driverId);
         return response.stream().map(AssignmentResponseDto::convert).toList();
