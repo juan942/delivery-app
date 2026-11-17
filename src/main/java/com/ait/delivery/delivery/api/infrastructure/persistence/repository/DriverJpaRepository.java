@@ -4,8 +4,10 @@ import com.ait.delivery.delivery.api.infrastructure.persistence.entity.DriverEnt
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface DriverJpaRepository extends JpaRepository<DriverEntity, UUID> {
     List<DriverEntity> findByActiveTrue();
+    Optional<DriverEntity> findByLicenseNumber(String licenseNumber);
 }

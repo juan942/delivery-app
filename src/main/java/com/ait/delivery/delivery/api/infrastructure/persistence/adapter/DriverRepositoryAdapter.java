@@ -32,12 +32,13 @@ public class DriverRepositoryAdapter implements DriverRepository {
     }
 
     @Override
+    public Optional<Driver> findByLicenseNumber(String licenseNumber) {
+        return jpa.findByLicenseNumber(licenseNumber).map(DriverMapper::entityToDomain);
+    }
+
+    @Override
     public List<Driver> findAllActive() {
         return jpa.findByActiveTrue().stream().map(DriverMapper::entityToDomain).toList();
     }
 
-    @Override
-    public List<Driver> findAll() {
-        return jpa.findAll().stream().map(DriverMapper::entityToDomain).toList();
-    }
 }

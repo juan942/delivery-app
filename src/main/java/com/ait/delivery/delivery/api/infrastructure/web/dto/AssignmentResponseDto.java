@@ -2,15 +2,15 @@ package com.ait.delivery.delivery.api.infrastructure.web.dto;
 
 import com.ait.delivery.delivery.api.domain.model.Assignment;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record AssignmentResponseDto(
         UUID id,
         UUID orderId,
         UUID driverId,
-        ZonedDateTime createdAt,
-        ZonedDateTime endedAt,
+        LocalDateTime createdAt,
+        LocalDateTime endedAt,
         String pdfPath,
         String imagePath,
         boolean active

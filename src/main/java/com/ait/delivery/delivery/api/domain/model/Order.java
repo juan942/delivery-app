@@ -4,7 +4,6 @@ import com.ait.delivery.delivery.api.domain.enums.OrderStatus;
 import com.ait.delivery.delivery.api.domain.exception.InvalidArgumentException;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.UUID;
 
 public class Order {

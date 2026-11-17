@@ -2,20 +2,20 @@ package com.ait.delivery.delivery.api.domain.model;
 
 import com.ait.delivery.delivery.api.domain.exception.InvalidArgumentException;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Assignment {
     private final UUID id;
     private final UUID orderId;
     private final UUID driverId;
-    private final ZonedDateTime createdAt;
-    private ZonedDateTime endedAt;
+    private final LocalDateTime createdAt;
+    private LocalDateTime endedAt;
     private final String pdfPath;
     private final String imagePath;
 
-    public Assignment(UUID id, UUID orderId, UUID driverId, ZonedDateTime createdAt,
-                       ZonedDateTime endedAt, String pdfPath, String imagePath) {
+    public Assignment(UUID id, UUID orderId, UUID driverId, LocalDateTime createdAt,
+                       LocalDateTime endedAt, String pdfPath, String imagePath) {
         this.id = id;
         this.orderId = orderId;
         this.driverId = driverId;
@@ -28,13 +28,13 @@ public class Assignment {
     public static Assignment create(UUID orderId, UUID driverId, String pdfPath, String imagePath) {
         validateField(orderId, "orderId");
         validateField(driverId, "driverId");
-        return new Assignment(UUID.randomUUID(), orderId, driverId, ZonedDateTime.now(),
+        return new Assignment(UUID.randomUUID(), orderId, driverId, LocalDateTime.now(),
                 null, pdfPath, imagePath);
     }
 
     public void close() {
         if (this.endedAt == null) {
-            this.endedAt = ZonedDateTime.now();
+            this.endedAt = LocalDateTime.now();
         }
     }
 
@@ -60,11 +60,11 @@ public class Assignment {
         return driverId;
     }
 
-    public ZonedDateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public ZonedDateTime getEndedAt() {
+    public LocalDateTime getEndedAt() {
         return endedAt;
     }
 

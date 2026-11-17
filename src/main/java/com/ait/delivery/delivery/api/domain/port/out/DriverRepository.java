@@ -9,6 +9,6 @@ import java.util.UUID;
 public interface DriverRepository {
     Driver save(Driver driver);
     Optional<Driver> findById(UUID id);
+    Optional<Driver> findByLicenseNumber(String licenseNumber);
     List<Driver> findAllActive();
-    List<Driver> findAll();
 }

@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -29,10 +29,10 @@ public class AssignmentEntity {
     private UUID driverId;
 
     @Column(name = "created_at", nullable = false)
-    private ZonedDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "ended_at")
-    private ZonedDateTime endedAt;
+    private LocalDateTime endedAt;
 
     @Column(name = "pdf_path", nullable = false, length = 500)
     private String pdfPath;
