@@ -63,7 +63,7 @@ public class GlobalHandlerException {
         String details = ex.getBindingResult().getFieldErrors().stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.joining("; "));
-        return build(HttpStatus.UNAUTHORIZED, "Validation failed", request, details);
+        return build(HttpStatus.BAD_REQUEST, "Validation failed", request, details);
     }
 
     private ResponseEntity<ApiError> build (HttpStatusCode status, String message, HttpServletRequest request, String details) {

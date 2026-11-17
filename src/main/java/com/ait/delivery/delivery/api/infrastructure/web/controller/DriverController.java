@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class DriverController {
     @ApiResponse(responseCode = "200", description = "Condcutor creado")
     @ApiResponse(responseCode = "404", description = "Datos de entrada no validos", content = @Content(schema = @Schema(implementation = ApiError.class)))
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public DriverResponseDto create(@Valid @RequestBody DriverRequestDto request) {
         Driver response = useCases.create(request.name(), request.licenseNumber());
         return DriverResponseDto.convert(response);
